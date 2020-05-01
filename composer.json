@@ -1,0 +1,26 @@
+{
+	"name": "innoweb/silverstripe-form-validation",
+	"description": "Adds Bouncer.js form validation to frontend forms.",
+	"type": "silverstripe-vendormodule",
+	"keywords": ["silverstripe", "form", "validation", "HTML5", "Bouncer.js"],
+	"license": "BSD-3-Clause",
+	"authors": [{
+		"name": "Florian Thoma",
+		"homepage": "https://www.innoweb.com.au"
+	}],
+	"require":
+	{
+		"silverstripe/framework": "^4",
+		"silverstripe/vendor-plugin": "^1"
+	},
+	"autoload": {
+		"psr-4": {
+			"Innoweb\\FormValidation\\": "src/"
+		}
+    },
+    "extra": {
+        "expose": [
+            "client/dist"
+        ]
+	}
+}

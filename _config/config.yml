@@ -1,0 +1,12 @@
+---
+Name: form-validation
+After:
+  - 'framework/*'
+---
+SilverStripe\Forms\Form:
+  extensions:
+    - Innoweb\FormValidation\Forms\Extensions\FormExtension
+
+SilverStripe\Forms\FormField:
+  extensions:
+    - Innoweb\FormValidation\Forms\Extensions\FormFieldExtension

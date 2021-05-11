@@ -3,7 +3,7 @@ const del = require('del');
 const path = require('path');
 const plumber = require('gulp-plumber');
 const sourcemaps = require('gulp-sourcemaps');
-const concat = require('gulp-concat-util');
+const concat = require('gulp-concat');
 const stripdebug = require('gulp-strip-debug');
 const uglify = require('gulp-uglify');
 

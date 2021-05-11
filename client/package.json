@@ -14,7 +14,7 @@
   "devDependencies": {
     "del": "^6.0.0",
     "gulp": "^4.0.2",
-    "gulp-concat-util": "^0.5.5",
+    "gulp-concat": "^2.6.1",
     "gulp-plumber": "^1.2.1",
     "gulp-sourcemaps": "^3.0.0",
     "gulp-strip-debug": "^4.0.0",

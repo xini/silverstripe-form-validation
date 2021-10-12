@@ -21,7 +21,11 @@ const paths = {
 
 const scriptFiles = {
 	"form-validation.js": [
-		"node_modules/formbouncerjs/dist/bouncer.polyfills.min.js",
+		"node_modules/formbouncerjs/src/js/bouncer/_classList.polyfill.js",
+		"node_modules/formbouncerjs/src/js/bouncer/_closest.polyfill.js",
+		"node_modules/formbouncerjs/src/js/bouncer/_customEvent.polyfill.js",
+		"node_modules/formbouncerjs/src/js/bouncer/_matches.polyfill.js",
+		"node_modules/formbouncerjs/src/js/bouncer/bouncer.js",
 		"src/javascript/validation-init.js"
 	]
 }

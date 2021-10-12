@@ -9,7 +9,7 @@
   "author": "Florian Thoma",
   "license": "BSD-3-Clause",
   "dependencies": {
-    "formbouncerjs": "^1.4.6"
+    "formbouncerjs": "xini/bouncer#patch-1"
   },
   "devDependencies": {
     "del": "^6.0.0",

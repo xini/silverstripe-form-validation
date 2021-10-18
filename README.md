@@ -25,13 +25,59 @@ Then run dev/build.
 
 ## Configuration
 
-No configuration required. By default al frontend forms are being validated based on their HTML5 properties. 
+No configuration required. By default, all frontend forms are being validated based on their HTML5 properties. 
+
+### Disable validation
 
 If you want to exclude a form from validation, you can disable it in code:
 
 ```
 $form = Form::create($controller, 'MyForm', $fields, $actions, $validator);
 $form->disableFrontendValidation();
+```
+
+### Add Custom Validators
+
+You can inject custom JavaScript validators for certain fields. To do so, you need to extend `FormField` as follows:
+
+```
+SilverStripe\Forms\FormField:
+  extensions:
+    - Your\Custom\ValidationExtension
+```
+
+Use the `addCustomValidatorScripts` extension hook to inject your JavaScript validator:
+
+```
+class ValidationExtension extends Extension
+{
+    // needs to be run on base FormField class, otherwise it's not going to be loaded on time
+    public function addCustomValidatorScripts() {
+        Requirements::javascript(
+            'your/custom/field-validation.js'
+        );
+    }
+}
+```
+
+In your `field-validation.js` you need to add your validator definition to the global `bouncerValidators` variable:
+
+```
+window.bouncerValidators = window.bouncerValidators || {};
+		
+window.bouncerValidators.yourCustomValidator = {
+	validator: function(field) { 
+		if (field.classList.contains('YourCustomField')) { // limit validator to your custom field type
+			if (...) {
+				// return true if field is NOT valid
+				return true;
+			}
+		}
+		// return false if field is valid!
+		return false;
+	},
+	message: 'Please enter a valid value'
+};
 ```
 
 ## License

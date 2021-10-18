@@ -11,5 +11,4 @@
 		<li><%t SilverStripe\\Forms\\CheckboxSetField_ss.NOOPTIONSAVAILABLE 'No options available' %></li>
 	<% end_if %>
 </ul>
-<div id="checkbox-error-$ID"></div>
 </div>

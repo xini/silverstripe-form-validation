@@ -2,53 +2,82 @@
 	'use strict';
 
 	function initFormValidation() {
+		// define custom validations
+		var validators = {
+			// custom validator for checkbox groups
+			// currently not working, see https://github.com/cferdinandi/bouncer/issues/40 
+			// and https://github.com/cferdinandi/bouncer/issues/47 
+			checkboxSet: function(field) { 
+				// where at least one checkbox must be checked
+				var wrapper = field.closest('[data-bouncer-required-set]');
+				if (!wrapper) return false;	
+				var checkboxes = wrapper.querySelectorAll('[type="checkbox"]');
+				if (checkboxes.length > 0) {
+					var checkedCount = 0;
+					for (var i = 0; i < checkboxes.length; ++i) {
+						if (checkboxes[i].checked) { 
+							checkedCount++; 
+						}
+					}
+					return checkedCount === 0 ? true : false;
+				}
+			}
+		};
+		// define custom messages
+		var messages = {
+			checkboxSet: 'Please choose at least one option'
+		};
 		
-		var validate = new Bouncer(
+		// load globally defined validators, e.g. for international phone field (see https://github.com/xini/silverstripe-international-phone-number-field)
+		// example:
+		// 
+		// window.bouncerValidators = window.bouncerValidators || {};
+		// window.bouncerValidators.phoneNumber = {
+		//     validator: function(field) { ... }, // return false if field is valid!
+		//     message: 'Please enter a valid phone number'
+		// };
+		var bouncerValidators = window.bouncerValidators || {};
+		for (var validatorName in bouncerValidators) {
+			if (bouncerValidators.hasOwnProperty(validatorName)) {
+				if (bouncerValidators[validatorName].hasOwnProperty('validator')) {
+					validators[validatorName] = bouncerValidators[validatorName].validator;
+				}
+				if (bouncerValidators[validatorName].hasOwnProperty('message')) {
+					messages[validatorName] = bouncerValidators[validatorName].message;
+				}
+			}
+		}
+		
+		// init bouncer
+		new Bouncer(
 			'form:not(.js-no-validation):not(.userform)',
 			{
 				fieldClass: 'error', // Applied to fields with errors
-				errorClass: 'error message', // Applied to the error message for invalid fields
-				
-				// custom validator for checkbox groups
-				// currently not working, see https://github.com/cferdinandi/bouncer/issues/40 
-				// and https://github.com/cferdinandi/bouncer/issues/47 
-				customValidations: {
-					checkboxSet: function(field) { 
-						// where at least one checkbox must be checked
-						var wrapper = field.closest('[data-bouncer-required-set]');
-						if (!wrapper) return false;	
-						var checkboxes = wrapper.querySelectorAll('[type="checkbox"]');
-						if (checkboxes.length > 0) {
-							var checkedCount = 0;
-							for (var i = 0; i < checkboxes.length; ++i) {
-								if (checkboxes[i].checked) { 
-									checkedCount++; 
-								}
-							}
-							return checkedCount === 0 ? true : false;
-						}
-					}
-				},
-				messages: {
-					checkboxSet: 'Please choose at least one option'
-				}
+				errorClass: 'message error', // Applied to the error message for invalid fields
+				customValidations: validators,
+				messages: messages
 			}
 		);
-		
-		// remove duplicated error messages for checkbox groups
+
+		// clean up error messages
 		document.addEventListener('bouncerShowError', function (event) {
 			var field = event.target;
-			var wrapper = field.closest('[data-bouncer-required-set]');
-			if (typeof(wrapper) == 'undefined' || wrapper == null) { 
-				return;
-			}
-			var messages = wrapper.querySelectorAll('[id^="bouncer-error_"]');
-			if (messages.length > 1) {
-				Array.prototype.forEach.call(messages, function (message, index) {
-					if (index > 0) {
-						message.remove();
-					}
-				});
+			var wrapper = field.closest('.middleColumn');
+			if (typeof(wrapper) !== 'undefined' && wrapper !== null) { 
+				// remove duplicated error messages, e.g. for checkbox groups
+				var messages = wrapper.querySelectorAll('.message');
+				if (messages.length > 1) {
+					Array.prototype.forEach.call(messages, function (message, index) {
+						if (index > 0) {
+							message.remove();
+						}
+					});
+				}
+				// place message at the end of middleColumn
+				var message = wrapper.querySelector('.message');
+				if (typeof(message) !== 'undefined' && message !== null) { 
+					wrapper.appendChild(message);
+				}
 			}
 		}, false);
 		

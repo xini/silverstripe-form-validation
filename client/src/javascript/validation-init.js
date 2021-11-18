@@ -5,18 +5,18 @@
 		// define custom validations
 		var validators = {
 			// custom validator for checkbox groups
-			// currently not working, see https://github.com/cferdinandi/bouncer/issues/40 
-			// and https://github.com/cferdinandi/bouncer/issues/47 
-			checkboxSet: function(field) { 
+			// currently not working, see https://github.com/cferdinandi/bouncer/issues/40
+			// and https://github.com/cferdinandi/bouncer/issues/47
+			checkboxSet: function(field) {
 				// where at least one checkbox must be checked
 				var wrapper = field.closest('[data-bouncer-required-set]');
-				if (!wrapper) return false;	
+				if (!wrapper) return false;
 				var checkboxes = wrapper.querySelectorAll('[type="checkbox"]');
 				if (checkboxes.length > 0) {
 					var checkedCount = 0;
 					for (var i = 0; i < checkboxes.length; ++i) {
-						if (checkboxes[i].checked) { 
-							checkedCount++; 
+						if (checkboxes[i].checked) {
+							checkedCount++;
 						}
 					}
 					return checkedCount === 0 ? true : false;
@@ -27,10 +27,10 @@
 		var messages = {
 			checkboxSet: 'Please choose at least one option'
 		};
-		
+
 		// load globally defined validators, e.g. for international phone field (see https://github.com/xini/silverstripe-international-phone-number-field)
 		// example:
-		// 
+		//
 		// window.bouncerValidators = window.bouncerValidators || {};
 		// window.bouncerValidators.phoneNumber = {
 		//     validator: function(field) { ... }, // return false if field is valid!
@@ -47,23 +47,34 @@
 				}
 			}
 		}
-		
-		// init bouncer
-		new Bouncer(
-			'form:not(.js-no-validation):not(.userform)',
-			{
-				fieldClass: 'error', // Applied to fields with errors
-				errorClass: 'message error', // Applied to the error message for invalid fields
-				customValidations: validators,
-				messages: messages
-			}
-		);
+
+		// init bouncer for each form separately in order to control the settings
+        var forms = document.querySelectorAll('form:not(.js-no-validation):not(.userform)');
+        Array.prototype.forEach.call(forms, function(form, i) {
+            if (form.hasAttribute('id')) {
+                var formID = form.getAttribute('id');
+                var disableSumbit = false;
+                if (form.classList.contains('js-disable-submit')) {
+                    disableSumbit = true;
+                }
+                new Bouncer(
+                    '#' + formID,
+                    {
+                        fieldClass: 'error', // Applied to fields with errors
+                        errorClass: 'message error', // Applied to the error message for invalid fields
+                        customValidations: validators,
+                        messages: messages,
+                        disableSubmit: disableSumbit
+                    }
+                );
+            }
+        });
 
 		// clean up error messages
 		document.addEventListener('bouncerShowError', function (event) {
 			var field = event.target;
 			var wrapper = field.closest('.middleColumn');
-			if (typeof(wrapper) !== 'undefined' && wrapper !== null) { 
+			if (typeof(wrapper) !== 'undefined' && wrapper !== null) {
 				// remove duplicated error messages, e.g. for checkbox groups
 				var messages = wrapper.querySelectorAll('.message');
 				if (messages.length > 1) {
@@ -75,12 +86,12 @@
 				}
 				// place message at the end of middleColumn
 				var message = wrapper.querySelector('.message');
-				if (typeof(message) !== 'undefined' && message !== null) { 
+				if (typeof(message) !== 'undefined' && message !== null) {
 					wrapper.appendChild(message);
 				}
 			}
 		}, false);
-		
+
 	}
 
 	if (document.readyState === "loading") {

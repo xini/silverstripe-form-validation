@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.2.0]
+
+* allow suppressing form submission by adding js-disable-submit class to form (useful for AJAX forms)
+
 ## [1.1.0]
 
 * temporarily swtich to custom bouncer build, integrating submission fix (cferdinandi/bouncer#76)

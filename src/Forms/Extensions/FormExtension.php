@@ -10,4 +10,9 @@ class FormExtension extends Extension
         $this->owner->addExtraClass('js-no-validation');
         return $this->owner;
     }
+	
+    public function disableFormSubmission() {
+        $this->owner->addExtraClass('js-disable-submit');
+        return $this->owner;
+    }
 }

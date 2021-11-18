@@ -31,16 +31,38 @@ No configuration required. By default, all frontend forms are being validated ba
 
 If you want to exclude a form from validation, you can disable it in code:
 
-```
+```php
 $form = Form::create($controller, 'MyForm', $fields, $actions, $validator);
 $form->disableFrontendValidation();
+```
+
+This add the class `js-no-validation` to the form tag.
+
+
+### Disable form submission
+
+To disable the default form submission, you can disable it in code:
+
+```php
+$form = Form::create($controller, 'MyForm', $fields, $actions, $validator);
+$form->disableFormSubmission();
+```
+
+This adds the class `js-disable-submit` to the form tag.
+
+This is useful if you want to submit the form via AJAX. To submit the form, you can listen to the `bouncerFormValid` event in JavaScript:
+
+```javascript
+$('#MyForm').on('bouncerFormValid', function(e) {
+	...
+});
 ```
 
 ### Add Custom Validators
 
 You can inject custom JavaScript validators for certain fields. To do so, you need to extend `FormField` as follows:
 
-```
+```yml
 SilverStripe\Forms\FormField:
   extensions:
     - Your\Custom\ValidationExtension
@@ -48,7 +70,7 @@ SilverStripe\Forms\FormField:
 
 Use the `addCustomValidatorScripts` extension hook to inject your JavaScript validator:
 
-```
+```php
 class ValidationExtension extends Extension
 {
     // needs to be run on base FormField class, otherwise it's not going to be loaded on time
@@ -62,7 +84,7 @@ class ValidationExtension extends Extension
 
 In your `field-validation.js` you need to add your validator definition to the global `bouncerValidators` variable:
 
-```
+```javascript
 window.bouncerValidators = window.bouncerValidators || {};
 		
 window.bouncerValidators.yourCustomValidator = {

@@ -53,9 +53,9 @@ This adds the class `js-disable-submit` to the form tag.
 This is useful if you want to submit the form via AJAX. To submit the form, you can listen to the `bouncerFormValid` event in JavaScript:
 
 ```javascript
-$('#MyForm').on('bouncerFormValid', function(e) {
+form.addEventListener('bouncerFormValid', function (event) {
 	...
-});
+}, false);
 ```
 
 ### Add Custom Validators

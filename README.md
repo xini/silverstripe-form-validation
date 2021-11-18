@@ -5,11 +5,11 @@
 
 ## Introduction
 
-Adds automatic form validation for frontend forms using the [Bouncer.js] (https://github.com/cferdinandi/bouncer) library. This replaces the default HTML5 field validation to improve and unify the layout of error messages accross browsers. 
+Adds automatic form validation for frontend forms using the [Bouncer.js](https://github.com/cferdinandi/bouncer) library. This replaces the default HTML5 field validation to improve and unify the layout of error messages accross browsers. 
 
 This doesn't replace backend form validation. Backend validation should still be done using the default SS validator (e.g. RequiredFields).
 
-It leaves [UserForms] (https://github.com/silverstripe/silverstripe-userforms) forms alone as they are too heavily dependant on jQuery.
+It leaves [UserForms](https://github.com/silverstripe/silverstripe-userforms) forms alone as they are too heavily dependant on jQuery.
 
 ## Requirements
 

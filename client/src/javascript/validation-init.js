@@ -25,7 +25,32 @@
 		};
 		// define custom messages
 		var messages = {
-			checkboxSet: 'Please choose at least one option'
+			checkboxSet: 'Please choose at least one option',
+            missingValue: {
+                checkbox: 'This field is required.',
+                radio: 'Please select a value.',
+                select: 'Please select a value.',
+                'select-multiple': 'Please select at least one value.',
+                default: 'Please fill out this field.'
+            },
+            patternMismatch: {
+                email: 'Please enter a valid email address.',
+                url: 'Please enter a URL.',
+                number: 'Please enter a number',
+                color: 'Please match the following format: #rrggbb',
+                date: 'Please use the YYYY-MM-DD format',
+                time: 'Please use the 24-hour time format. Ex. 23:00',
+                month: 'Please use the YYYY-MM format',
+                default: 'Please match the requested format.'
+            },
+            outOfRange: {
+                over: 'Please select a value that is no more than {max}.',
+                under: 'Please select a value that is no less than {min}.'
+            },
+            wrongLength: {
+                over: 'Please shorten this text to no more than {maxLength} characters. You are currently using {length} characters.',
+                under: 'Please lengthen this text to {minLength} characters or more. You are currently using {length} characters.'
+            }
 		};
 
 		// load globally defined validators, e.g. for international phone field (see https://github.com/xini/silverstripe-international-phone-number-field)
@@ -48,7 +73,11 @@
 			}
 		}
 
-		// init bouncer for each form separately in order to control the settings
+        // load translated messages
+        var bouncerMessages = window.bouncerMessages || {};
+        messages = extend(true, messages, bouncerMessages);
+
+        // init bouncer for each form separately in order to control the settings
         var forms = document.querySelectorAll('form:not(.js-no-validation):not(.userform)');
         Array.prototype.forEach.call(forms, function(form, i) {
             if (form.hasAttribute('id')) {
@@ -94,7 +123,42 @@
 
 	}
 
-	if (document.readyState === "loading") {
+    // merge json objects, see https://gomakethings.com/merging-objects-with-vanilla-javascript/
+    // var shallowMerge = extend(obj1, obj2);
+    // var deepMerge = extend(true, obj1, obj2);
+    var extend = function () {
+        // Variables
+        var extended = {};
+        var deep = false;
+        var i = 0;
+        // Check if a deep merge
+        if (typeof (arguments[0]) === 'boolean') {
+            deep = arguments[0];
+            i++;
+        }
+        // Merge the object into the extended object
+        var merge = function (obj) {
+            for (var prop in obj) {
+                if (obj.hasOwnProperty(prop)) {
+                    if (deep && Object.prototype.toString.call(obj[prop]) === '[object Object]') {
+                        // If we're doing a deep merge and the property is an object
+                        extended[prop] = extend(true, extended[prop], obj[prop]);
+                    } else {
+                        // Otherwise, do a regular merge
+                        extended[prop] = obj[prop];
+                    }
+                }
+            }
+        };
+        // Loop through each object and conduct a merge
+        for (; i < arguments.length; i++) {
+            merge(arguments[i]);
+        }
+        return extended;
+    };
+
+
+    if (document.readyState === "loading") {
 		// Loading hasn't finished yet
 		document.addEventListener("DOMContentLoaded", initFormValidation);
 	} else {

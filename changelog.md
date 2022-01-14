@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.3.0]
+
+* add translations for validation messages (en, de, fr)
+
 ## [1.2.0]
 
 * allow suppressing form submission by adding js-disable-submit class to form (useful for AJAX forms)

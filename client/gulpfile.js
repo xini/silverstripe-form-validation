@@ -27,7 +27,16 @@ const scriptFiles = {
 		"node_modules/formbouncerjs/src/js/bouncer/_matches.polyfill.js",
 		"node_modules/formbouncerjs/src/js/bouncer/bouncer.js",
 		"src/javascript/validation-init.js"
-	]
+	],
+    "lang/en.js": [
+        "src/javascript/lang/en.js"
+    ],
+    "lang/de.js": [
+        "src/javascript/lang/de.js"
+    ],
+    "lang/fr.js": [
+        "src/javascript/lang/fr.js"
+    ]
 }
 
 const sassOptions = {
@@ -58,7 +67,7 @@ function scripts(cb) {
             .pipe(concat(scriptName))
             .pipe(stripdebug())
             .pipe(uglify({
-				mangle: false, 
+				mangle: false,
 				compress: false
 			}))
             .pipe(sourcemaps.write('.'))

@@ -96,13 +96,6 @@
                         disableSubmit: disableSumbit
                     }
                 );
-
-                var resetButtons = form.querySelectorAll('input.js-skip-validation, button.js-skip-validation');
-                Array.prototype.forEach.call(resetButtons, function(button, i) {
-                    button.addEventListener('click', function (e) {
-                        bouncer.destroy();
-                    });
-                });
             }
         });
 

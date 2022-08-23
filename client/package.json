@@ -9,7 +9,7 @@
   "author": "Florian Thoma",
   "license": "BSD-3-Clause",
   "dependencies": {
-    "formbouncerjs": "github:xini/bouncer#patch-1"
+    "formbouncerjs": "github:xini/bouncer#merged-pull-requests"
   },
   "devDependencies": {
     "del": "^6.0.0",

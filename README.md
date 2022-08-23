@@ -38,6 +38,8 @@ $form->disableFrontendValidation();
 
 This add the class `js-no-validation` to the form tag.
 
+To skip validation for specific buttons, you can add the class `js-skip-validation` to the button.
+
 
 ### Disable form submission
 

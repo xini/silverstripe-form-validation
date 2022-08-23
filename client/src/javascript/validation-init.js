@@ -1,31 +1,31 @@
 ;(function () {
-	'use strict';
+    'use strict';
 
-	function initFormValidation() {
-		// define custom validations
-		var validators = {
-			// custom validator for checkbox groups
-			// currently not working, see https://github.com/cferdinandi/bouncer/issues/40
-			// and https://github.com/cferdinandi/bouncer/issues/47
-			checkboxSet: function(field) {
-				// where at least one checkbox must be checked
-				var wrapper = field.closest('[data-bouncer-required-set]');
-				if (!wrapper) return false;
-				var checkboxes = wrapper.querySelectorAll('[type="checkbox"]');
-				if (checkboxes.length > 0) {
-					var checkedCount = 0;
-					for (var i = 0; i < checkboxes.length; ++i) {
-						if (checkboxes[i].checked) {
-							checkedCount++;
-						}
-					}
-					return checkedCount === 0 ? true : false;
-				}
-			}
-		};
-		// define custom messages
-		var messages = {
-			checkboxSet: 'Please choose at least one option',
+    function initFormValidation() {
+        // define custom validations
+        var validators = {
+            // custom validator for checkbox groups
+            // currently not working, see https://github.com/cferdinandi/bouncer/issues/40
+            // and https://github.com/cferdinandi/bouncer/issues/47
+            checkboxSet: function(field) {
+                // where at least one checkbox must be checked
+                var wrapper = field.closest('[data-bouncer-required-set]');
+                if (!wrapper) return false;
+                var checkboxes = wrapper.querySelectorAll('[type="checkbox"]');
+                if (checkboxes.length > 0) {
+                    var checkedCount = 0;
+                    for (var i = 0; i < checkboxes.length; ++i) {
+                        if (checkboxes[i].checked) {
+                            checkedCount++;
+                        }
+                    }
+                    return checkedCount === 0 ? true : false;
+                }
+            }
+        };
+        // define custom messages
+        var messages = {
+            checkboxSet: 'Please choose at least one option',
             missingValue: {
                 checkbox: 'This field is required.',
                 radio: 'Please select a value.',
@@ -51,27 +51,27 @@
                 over: 'Please shorten this text to no more than {maxLength} characters. You are currently using {length} characters.',
                 under: 'Please lengthen this text to {minLength} characters or more. You are currently using {length} characters.'
             }
-		};
+        };
 
-		// load globally defined validators, e.g. for international phone field (see https://github.com/xini/silverstripe-international-phone-number-field)
-		// example:
-		//
-		// window.bouncerValidators = window.bouncerValidators || {};
-		// window.bouncerValidators.phoneNumber = {
-		//     validator: function(field) { ... }, // return false if field is valid!
-		//     message: 'Please enter a valid phone number'
-		// };
-		var bouncerValidators = window.bouncerValidators || {};
-		for (var validatorName in bouncerValidators) {
-			if (bouncerValidators.hasOwnProperty(validatorName)) {
-				if (bouncerValidators[validatorName].hasOwnProperty('validator')) {
-					validators[validatorName] = bouncerValidators[validatorName].validator;
-				}
-				if (bouncerValidators[validatorName].hasOwnProperty('message')) {
-					messages[validatorName] = bouncerValidators[validatorName].message;
-				}
-			}
-		}
+        // load globally defined validators, e.g. for international phone field (see https://github.com/xini/silverstripe-international-phone-number-field)
+        // example:
+        //
+        // window.bouncerValidators = window.bouncerValidators || {};
+        // window.bouncerValidators.phoneNumber = {
+        //     validator: function(field) { ... }, // return false if field is valid!
+        //     message: 'Please enter a valid phone number'
+        // };
+        var bouncerValidators = window.bouncerValidators || {};
+        for (var validatorName in bouncerValidators) {
+            if (bouncerValidators.hasOwnProperty(validatorName)) {
+                if (bouncerValidators[validatorName].hasOwnProperty('validator')) {
+                    validators[validatorName] = bouncerValidators[validatorName].validator;
+                }
+                if (bouncerValidators[validatorName].hasOwnProperty('message')) {
+                    messages[validatorName] = bouncerValidators[validatorName].message;
+                }
+            }
+        }
 
         // load translated messages
         var bouncerMessages = window.bouncerMessages || {};
@@ -86,7 +86,7 @@
                 if (form.classList.contains('js-disable-submit')) {
                     disableSumbit = true;
                 }
-                new Bouncer(
+                var bouncer = new Bouncer(
                     '#' + formID,
                     {
                         fieldClass: 'error', // Applied to fields with errors
@@ -96,32 +96,39 @@
                         disableSubmit: disableSumbit
                     }
                 );
+
+                var resetButtons = form.querySelectorAll('input.js-skip-validation, button.js-skip-validation');
+                Array.prototype.forEach.call(resetButtons, function(button, i) {
+                    button.addEventListener('click', function (e) {
+                        bouncer.destroy();
+                    });
+                });
             }
         });
 
-		// clean up error messages
-		document.addEventListener('bouncerShowError', function (event) {
-			var field = event.target;
-			var wrapper = field.closest('.middleColumn');
-			if (typeof(wrapper) !== 'undefined' && wrapper !== null) {
-				// remove duplicated error messages, e.g. for checkbox groups
-				var messages = wrapper.querySelectorAll('.message');
-				if (messages.length > 1) {
-					Array.prototype.forEach.call(messages, function (message, index) {
-						if (index > 0) {
-							message.remove();
-						}
-					});
-				}
-				// place message at the end of middleColumn
-				var message = wrapper.querySelector('.message');
-				if (typeof(message) !== 'undefined' && message !== null) {
-					wrapper.appendChild(message);
-				}
-			}
-		}, false);
+        // clean up error messages
+        document.addEventListener('bouncerShowError', function (event) {
+            var field = event.target;
+            var wrapper = field.closest('.middleColumn');
+            if (typeof(wrapper) !== 'undefined' && wrapper !== null) {
+                // remove duplicated error messages, e.g. for checkbox groups
+                var messages = wrapper.querySelectorAll('.message');
+                if (messages.length > 1) {
+                    Array.prototype.forEach.call(messages, function (message, index) {
+                        if (index > 0) {
+                            message.remove();
+                        }
+                    });
+                }
+                // place message at the end of middleColumn
+                var message = wrapper.querySelector('.message');
+                if (typeof(message) !== 'undefined' && message !== null) {
+                    wrapper.appendChild(message);
+                }
+            }
+        }, false);
 
-	}
+    }
 
     // merge json objects, see https://gomakethings.com/merging-objects-with-vanilla-javascript/
     // var shallowMerge = extend(obj1, obj2);
@@ -159,11 +166,11 @@
 
 
     if (document.readyState === "loading") {
-		// Loading hasn't finished yet
-		document.addEventListener("DOMContentLoaded", initFormValidation);
-	} else {
-		// `DOMContentLoaded` has already fired
-		initFormValidation();
-	}
+        // Loading hasn't finished yet
+        document.addEventListener("DOMContentLoaded", initFormValidation);
+    } else {
+        // `DOMContentLoaded` has already fired
+        initFormValidation();
+    }
 
 }());

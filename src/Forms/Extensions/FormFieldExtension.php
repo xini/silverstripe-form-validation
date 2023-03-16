@@ -18,12 +18,12 @@ class FormFieldExtension extends Extension
 
             $language = explode('_', i18n::get_locale())[0];
             $module = ModuleLoader::getModule('innoweb/silverstripe-form-validation');
-            if ($module->hasResource("client/dist/javascript/lang/{$language}.js")) {
+            if ($module->getResource("client/dist/javascript/lang/{$language}.js")->exists()) {
                 Requirements::javascript(
                     $module->getResource("client/dist/javascript/lang/{$language}.js")->getRelativePath(),
                     ['defer' => true]
                 );
-            } elseif ($module->hasResource("client/dist/javascript/lang/en.js")) {
+            } elseif ($module->getResource("client/dist/javascript/lang/en.js")->exists()) {
                 // load en as default
                 Requirements::javascript(
                     $module->getResource("client/dist/javascript/lang/en.js")->getRelativePath(),

@@ -12,7 +12,7 @@ use SilverStripe\View\Requirements;
 
 class FormFieldExtension extends Extension
 {
-    public function onBeforeRender($field, $properties) {
+    public function onBeforeRender($field, $properties = []) {
         $controller = Controller::curr();
         if ($controller && !is_a($controller, LeftAndMain::class) && !is_a($controller, GraphQLController::class)) {
 

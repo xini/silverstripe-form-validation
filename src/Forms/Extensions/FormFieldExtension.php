@@ -14,8 +14,11 @@ class FormFieldExtension extends Extension
 {
     public function onBeforeRender($field, $properties) {
         $controller = Controller::curr();
-        if ($controller && !is_a($controller, LeftAndMain::class) && !is_a($controller, GraphQLController::class)) {
-
+        if ($controller
+            && !is_a($controller, LeftAndMain::class)
+            && !is_a($controller, GraphQLController::class)
+            && (($form = $this->getOwner()->getForm()) && (!$form->hasExtraClass('js-no-validation') || ($form->hasExtraClass('js-disable-submit'))))
+        ) {
             $language = explode('_', i18n::get_locale())[0];
             $module = ModuleLoader::getModule('innoweb/silverstripe-form-validation');
             if ($module->hasResource("client/dist/javascript/lang/{$language}.js")) {

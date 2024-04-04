@@ -17,7 +17,7 @@
             number: 'Veuillez entrer un nombre.',
             color: 'Veuillez utiliser le format suivant: #rrggbb',
             date: 'Veuillez utiliser le format suivant: YYYY-MM-DD',
-            time: 'Veuillez utiliser le format 24 heures, par exemple 23:00',
+            time: 'Veuillez entrer une heure valide.',
             month: 'Veuillez utiliser le format suivant: JJJJ-MM',
             default: 'Veuillez utiliser le format donné.'
         },

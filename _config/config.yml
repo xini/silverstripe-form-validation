@@ -8,3 +8,7 @@ SilverStripe\Forms\Form:
 SilverStripe\Forms\FormField:
   extensions:
     - Innoweb\FormValidation\Forms\Extensions\FormFieldExtension
+
+SilverStripe\Forms\TimeField:
+  extensions:
+    - Innoweb\FormValidation\Forms\Extensions\TimeFieldExtension

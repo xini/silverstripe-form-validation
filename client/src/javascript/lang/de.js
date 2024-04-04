@@ -17,7 +17,7 @@
             number: 'Bitte geben Sie eine Nummer ein.',
             color: 'Bitte verwenden Sie das folgende Format: #rrggbb',
             date: 'Bitte verwenden Sie das Format YYYY-MM-DD.',
-            time: 'Bitte verwenden Sie das 24-Stunden-Zeitformat, z.B. 23:00',
+            time: 'Bitte geben Sie eine gültige Zeit ein.',
             month: 'Bitte verwenden Sie das Format JJJJ-MM.',
             default: 'Bitte verwenden Sie das angegebene Format.'
         },

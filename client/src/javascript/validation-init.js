@@ -39,7 +39,7 @@
                 number: 'Please enter a number',
                 color: 'Please match the following format: #rrggbb',
                 date: 'Please use the YYYY-MM-DD format',
-                time: 'Please use the 24-hour time format. Ex. 23:00',
+                time: 'Please enter a valid time value',
                 month: 'Please use the YYYY-MM format',
                 default: 'Please match the requested format.'
             },

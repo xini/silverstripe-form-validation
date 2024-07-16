@@ -8,9 +8,6 @@ import stripdebug from 'gulp-strip-debug';
 import uglify from 'gulp-uglify';
 import rollup from 'gulp-best-rollup-2';
 
-import { nodeResolve } from "@rollup/plugin-node-resolve";
-import { default as commonjs } from "@rollup/plugin-commonjs";
-
 const paths = {
     "scripts": {
         "src": "src/javascript",
@@ -27,12 +24,7 @@ function scripts(cb) {
             errorHandler: onError
         }))
         .pipe(sourcemaps.init())
-        .pipe(rollup({ plugins: [
-                nodeResolve({
-                    browser: true
-                }),
-                commonjs()
-            ] }, 'iife'))
+        .pipe(rollup('iife'))
         .pipe(
             gulpif(
                 !debugEnabled,

@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.3.0]
+
+* fix frontend build
+* remove IE11 polyfills from build
+
 ## [2.2.0]
 
 * update frontend dependencies to gulp 5

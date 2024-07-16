@@ -1,6 +1,2 @@
-import "../../node_modules/formbouncerjs/src/js/bouncer/_classList.polyfill.js"
-import "../../node_modules/formbouncerjs/src/js/bouncer/_closest.polyfill.js"
-import "../../node_modules/formbouncerjs/src/js/bouncer/_customEvent.polyfill.js"
-import "../../node_modules/formbouncerjs/src/js/bouncer/_matches.polyfill.js"
 import "../../node_modules/formbouncerjs/src/js/bouncer/bouncer.js"
 import "./components/validation-init"

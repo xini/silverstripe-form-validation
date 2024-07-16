@@ -13,8 +13,6 @@
         "formbouncerjs": "github:xini/bouncer#merged-pull-requests"
     },
     "devDependencies": {
-        "@rollup/plugin-commonjs": "^26.0.1",
-        "@rollup/plugin-node-resolve": "^15.2.3",
         "del": "^7.1.0",
         "gulp": "^5.0.0",
         "gulp-best-rollup-2": "^5.0.3",

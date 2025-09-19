@@ -13,9 +13,9 @@ It leaves [UserForms](https://github.com/silverstripe/silverstripe-userforms) fo
 
 ## Requirements
 
-* SilverStripe ^5
+* SilverStripe ^6
 
-Note: this version is compatible with Silverstripe 5. For Silverstripe 4, please see the [1 release line](https://github.com/xini/silverstripe-form-validation/tree/1).
+Note: this version is compatible with Silverstripe 6. For Silverstripe 5, please see the [2 release line](https://github.com/xini/silverstripe-form-validation/tree/2).
 
 ## Installation
 

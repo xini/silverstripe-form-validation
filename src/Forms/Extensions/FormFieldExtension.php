@@ -4,26 +4,27 @@ namespace Innoweb\FormValidation\Forms\Extensions;
 
 use SilverStripe\Admin\LeftAndMain;
 use SilverStripe\Control\Controller;
+use SilverStripe\Core\Extension;
 use SilverStripe\Core\Manifest\ModuleLoader;
 use SilverStripe\GraphQL\Controller as GraphQLController;
-use SilverStripe\Core\Extension;
 use SilverStripe\i18n\i18n;
 use SilverStripe\View\Requirements;
 
 class FormFieldExtension extends Extension
 {
-    public function onBeforeRender($field, $properties = []) {
+    public function onBeforeRender($field, $properties = [])
+    {
         $controller = Controller::curr();
         if ($controller
-            && !is_a($controller, LeftAndMain::class)
+            && !$controller instanceof LeftAndMain
             && !is_a($controller, GraphQLController::class)
             && (($form = $this->getOwner()->getForm()) && (!$form->hasExtraClass('js-no-validation') || ($form->hasExtraClass('js-disable-submit'))))
         ) {
             $language = explode('_', i18n::get_locale())[0];
             $module = ModuleLoader::getModule('innoweb/silverstripe-form-validation');
-            if ($module->getResource("client/dist/javascript/{$language}.js")->exists()) {
+            if ($module->getResource(sprintf('client/dist/javascript/%s.js', $language))->exists()) {
                 Requirements::javascript(
-                    $module->getResource("client/dist/javascript/{$language}.js")->getRelativePath(),
+                    $module->getResource(sprintf('client/dist/javascript/%s.js', $language))->getRelativePath(),
                     ['defer' => true]
                 );
             } elseif ($module->getResource("client/dist/javascript/en.js")->exists()) {

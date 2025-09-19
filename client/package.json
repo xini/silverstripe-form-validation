@@ -13,16 +13,16 @@
         "formbouncerjs": "github:xini/bouncer#merged-pull-requests"
     },
     "devDependencies": {
-        "del": "^7.1.0",
-        "gulp": "^5.0.0",
+        "del": "^8.0.1",
+        "gulp": "^5.0.1",
         "gulp-best-rollup-2": "^5.0.3",
         "gulp-if": "^3.0.0",
         "gulp-plumber": "^1.2.1",
         "gulp-sourcemaps": "^3.0.0",
-        "gulp-strip-debug": "^6.0.0",
+        "gulp-strip-debug": "^7.0.0",
         "gulp-uglify": "^3.0.2"
     },
     "engines": {
-        "node": "^18.0.0"
+        "node": "^20.0.0"
     }
 }
